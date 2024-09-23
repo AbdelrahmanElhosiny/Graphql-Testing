@@ -1,33 +1,19 @@
 import styled from "styled-components";
 import "./App.css";
-
-const QUERY = `query {
-  country(code: "EG") {
-    code
-    emoji
-  }
-}`;
-
-const fetchGraphql = async () => {
-  const response = await fetch("https://countries.trevorblades.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: QUERY,
-    }),
-  });
-
-  const data = await response.json();
-  console.log(data);
-  return data;
-};
-
-fetchGraphql();
+import { ApolloProvider } from "@apollo/client";
+import client from "./clientConfig";
+import AddUser from "./Components/AddUser";
+import GetUser from "./Components/GetUser";
 
 function App() {
-  return <Holder></Holder>;
+  return (
+    <ApolloProvider client={client}>
+      <Holder>
+        <GetUser />
+        <AddUser />
+      </Holder>
+    </ApolloProvider>
+  );
 }
 
 const Holder = styled.div``;
